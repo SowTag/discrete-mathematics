@@ -36,7 +36,7 @@ def ingresar_relacion():
 conjunto, relacion = ingresar_relacion()
 
 print(f"Relación: {relacion}")
-print(f"Es reflexiva: {es_reflexiva(relacion, conjunto)}")
-print(f"Es simétrica: {es_simetrica(relacion)}")
-print(f"Es antisimétrica: {es_antisimetrica(relacion)}")
-print(f"Es transitiva: {es_transitiva(relacion)}")
+print(f"Es reflexiva: {reflexiva(relacion, conjunto)}")
+print(f"Es simétrica: {simetrica(relacion)}")
+print(f"Es antisimétrica: {antisimetrica(relacion)}")
+print(f"Es transitiva: {transitiva(relacion)}")
