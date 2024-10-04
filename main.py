@@ -12,7 +12,7 @@ while True:
   banner()
 
   print("Opciones disponibles:")
-  print("\t[1] Combinatoria y probabilidad")
+  print("\t[1] Combinatoria: Calcular variaciones, combinaciones y permutaciones")
   
 
   choice = input("> ")
