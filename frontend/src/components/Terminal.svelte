@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
 
   import { loadPyodide } from 'pyodide'
+    import LoadingSpinner from "./LoadingSpinner.svelte";
 
   let lines: string[] = [];
 
@@ -26,14 +27,20 @@
   onMount(async() => {
     // Have pyodide cached
     const py = await loadPyodide();
+    ready = true;
 
-
-    py.runPython()
+    // py.runPython()
   })
 </script>
 
 
 <main>
+  {#if !ready}
+    <div class="loading">
+      <LoadingSpinner color='greenyellow'/>
+      <span>Cargando intérprete</span>
+    </div>
+  {/if}
   
   {#each lines as line}
     <span class="line">{line}</span>
@@ -49,6 +56,20 @@
 
   .input {
     margin-top: auto;
+  }
+
+  .loading {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    & span {
+      margin-top: 1em;
+      color: greenyellow;
+    }
   }
 
   .input > input {
