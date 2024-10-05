@@ -4,7 +4,7 @@ def lanzar_moneda(num_monedas):
     caras = 0
     cruces = 0
 
-    for _ in range(num_monedas):
+    for i in range(num_monedas):
         resultado = random.choice(['Cara', 'Cruz'])
         if resultado == "Cara":
             caras +=1
@@ -20,6 +20,10 @@ def calcular_probabilidad(caras, cruces, total_de_lanzamientos):
 
 def juego():
     
+    print("Probabilidades usando la Regla de Laplace")
+    print("P(x) = Casos Favorables / Casos posibles")
+    
+    print("Demostracion: ")
     while True:
         try:
             num_monedas = int(input("Ingresa las monedas a lanzar: "))
@@ -34,9 +38,9 @@ def juego():
 
     prob_caras, prob_cruces = calcular_probabilidad(caras, cruces, num_monedas)
 
-    print(f"Resultado despues de {num_monedas} lanzadas:")
-    print(f"Caras: {caras} (Probabilidad: {prob_caras: .2f})")
-    print(f"Cruces: {cruces} (Probabilidad: {prob_cruces: .2f})")
+    print(f"Resultado despues de {num_monedas} monedas lanzadas:")
+    print(f"Caras: {caras} (Probabilidad: %{prob_caras: .2f})")
+    print(f"Cruces: {cruces} (Probabilidad: %{prob_cruces: .2f})")
 
 
 juego()
