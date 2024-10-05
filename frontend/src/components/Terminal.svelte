@@ -23,6 +23,11 @@
       name: "Conteo", 
       description: "Herramienta para calcular variaciones, permutaciones, y mas. Ejemplo de overflow del texto",
       file: "combinatorics.py"
+    },
+    {
+      name: "Test",
+      description: "Modulo de prueba para probar los input()",
+      file: "fe-input.py"
     }
   ]
 
@@ -30,6 +35,8 @@
 
   let code = ""
   let py: PyodideInterface
+  let input: HTMLInputElement
+  
 
 
   function handleKeydown(event: KeyboardEvent) {
@@ -44,20 +51,40 @@
     }
   }
 
+  const sleep = (time: number) => {
+    return new Promise((resolve) => {
+      setTimeout(resolve, time)
+    })
+  }
+
+
+
+  let inputHook = () => {
+    return new Promise((resolve) => {
+      let inputHookHandler = event => {
+        if(event.key === 'Enter') {
+          console.log("Submitted")
+          removeEventListener('keydown', inputHookHandler)
+
+          resolve(event.target.value)
+        }
+      }
+      
+      input.addEventListener("keydown", inputHookHandler)
+    })
+  }
+
   onMount(async() => {
     // Have pyodide cached
     py = await loadPyodide();
+
+    py.globals.set('input', inputHook)
     loading = "";
   })
 
   async function executePython() {
     // Load scope
-    await py.runPython(code)
-
-    // Run entrypoint
-    let out = await py.runPython("combinatorics()")
-    console.log(out)
-    console.log(code)
+    await py.runPython(code + '\nentrypoint()\n')
   }
 
   async function useModule(id: number) {
@@ -70,13 +97,14 @@
       if(text) code = text
       loading = ""
       lines = []
-      executePython()
+      
     } catch(e) {
       console.error(e)
       loading = "Ocurrió un error. Volviendo al menú principal..."
       setTimeout(() => loading = "", 3000)
     }
-  
+
+    executePython()
   }
 </script>
 
@@ -118,9 +146,9 @@
 
 
   {#if !chooserOpen}
-  <div class="input">
-    <input on:keydown={handleKeydown} type="text" placeholder={loading ? "" : "Esperando al intérprete de Python..."}>
-  </div>
+    <div class="input">
+      <input bind:this={input} on:keydown={handleKeydown} type="text" placeholder={loading ? "" : "Esperando al intérprete de Python..."}>
+    </div>
   {/if}
 </main>
 
