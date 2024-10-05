@@ -65,6 +65,5 @@ def main():
     print(" === Verificación de las propiedades ===")
     conjunto, relacion = ingresar_relaciones()
     mostrar_datos(conjunto, relacion)
-    
 
 main()
