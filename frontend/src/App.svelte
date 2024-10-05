@@ -7,17 +7,37 @@
 
   let loaded = false;
   let time = 0;
+  let error = '';
 
   onMount(async() => {
     let interval = setInterval(() => time += 0.1, 100)
     await loadPyodide()
     clearInterval(interval)
-    loaded = true
+    
+
+
+    if('serviceWorker' in navigator) {
+      addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+      });
+
+      loaded = true
+    } else {
+      error = "No service worker support in your browser."
+    }
   });
 </script>
 
 {#if loaded}
   <Main />
+{:else if error.length}
+  <main>
+    <div>
+      <h1>Error</h1>
+      <span class="error">{error}</span>
+      <span>Try again in a more modern browser.</span>
+    </div>
+  </main>
 {:else}
   <main>
     <div>
@@ -44,6 +64,11 @@
     place-items: center;
 
     user-select: none;
+  }
+
+  .error {
+    color: #f22;
+    opacity: 1;
   }
 
   main > div {
