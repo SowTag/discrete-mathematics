@@ -24,7 +24,7 @@ def transitiva(relacion):
     return True
 
 def ingresar_relacion():
-    conjunto = input("Ingresa los elementos del conjunto, separados por comas: ").split(',')
+    conjunto = input("Ingresa los elementos del conjunto, separados por comas: "    ).split(',')
     relacion = []
     n = int(input("Ingresa el número de pares en la relación: "))
     for _ in range(n):
